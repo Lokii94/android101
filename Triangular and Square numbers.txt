@@ -1,0 +1,89 @@
+package com.lokireddy.demoapp;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+import java.util.*;
+
+public class MainActivity extends AppCompatActivity {
+
+    List<Integer> triangular = new ArrayList<Integer>();
+    List<Integer> square = new ArrayList<Integer>();
+    Integer tri=0;
+    Boolean triCheck=false;
+    Boolean sqrCheck=false;
+
+
+
+    public class TriCheck{
+
+        public void isTri(Integer input){
+            Integer p=0;
+            for(p=0; p<100; p++){
+                Integer pt =  triangular.get(p);
+                if(input==pt){triCheck=true;}
+            }
+        }
+    }
+    public class SqrCheck{
+
+        public void isSqr(Integer input){
+            Integer p=0;
+            for(p=0; p<50; p++){
+                Integer pt = square.get(p);
+                if(input==pt){sqrCheck=true;}
+            }
+        }
+    }
+
+
+    public void clickFunction(View view) {
+        EditText text = (EditText) findViewById(R.id.guessEditText);
+        //Log.i("Input - ",text.getText().toString());
+        Integer input = Integer.parseInt(text.getText().toString());
+        Log.i("Input - ",input.toString());
+        Log.i("Tri4 - ",triangular.get(4).toString());
+        Log.i("Sqr4 - ",square.get(4).toString());
+
+
+        TriCheck trich = new TriCheck();
+        trich.isTri(input);
+        Log.i("TriBool - ",triCheck.toString());
+        SqrCheck sqrcheck = new SqrCheck();
+        sqrcheck.isSqr(input);
+        Log.i("SqrBool - ",sqrCheck.toString());
+        if(triCheck==false && sqrCheck==false){
+            Toast.makeText(this, "Not Triangular and Not Square", Toast.LENGTH_SHORT).show();
+       }  else if (triCheck!=false && sqrCheck==false) {
+            Toast.makeText(this, "Triangular Number", Toast.LENGTH_SHORT).show();
+        }else if (triCheck==false && sqrCheck!=false) {
+            Toast.makeText(this, "Square Number", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Triangular and Square Number", Toast.LENGTH_SHORT).show();
+        }
+
+    text.setText("");
+        sqrCheck=false;
+        triCheck=false;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        for(int i=1; i<=100; i++){
+            triangular.add(tri+i);
+            tri=tri+i;
+        }
+        for(int j=1; j<=50; j++){
+            square.add(j*j);
+        }
+
+    }
+}
